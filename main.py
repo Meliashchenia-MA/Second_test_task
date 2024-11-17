@@ -11,13 +11,15 @@ import numpy as np
 from PIL import Image
 
 conf = {
-    'bootstrap.servers': 'localhost:9092',
-    'group.id': 'json_group',
-    'auto.offset.reset': 'earliest'
+    'bootstrap.servers': 'kafka:9092',
+    'group.id': 'my-group',
+    'auto.offset.reset': 'earliest',
+    'enable.auto.commit': True
 }
 
+
 consumer = Consumer(conf)
-TOPIC = 'json_topic'
+TOPIC = 'my_topic'
 
 redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
 
@@ -72,6 +74,12 @@ def save_image(queue):
     }
 
     redis_client.set(image_name, json.dumps(image_info))
+
+    stored_info = redis_client.get(image_name)
+    if stored_info:
+        print(f"Image {image_name} successfully saved in Redis.")
+    else:
+        print(f"Failed to save image {image_name} in Redis.")
 
 
 if __name__ == "__main__":
