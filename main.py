@@ -18,13 +18,13 @@ conf = {
 }
 
 
-consumer = Consumer(conf)
 TOPIC = 'my_topic'
 
-redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
+redis_client = redis.StrictRedis(host='redis', port=6379, db=0)
 
 
 def consume_image(topic):
+    consumer = Consumer(conf)
     consumer.subscribe([topic])
 
     try:
@@ -93,8 +93,3 @@ if __name__ == "__main__":
 
     producer_process.join()
     consumer_process.join()
-
-
-
-
-
