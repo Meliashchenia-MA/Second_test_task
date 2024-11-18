@@ -35,6 +35,6 @@ def serialize_image(image_path):
         return img_byte_arr.getvalue()
 
 
-IMAGE_PATH = "C:\\Users\\misha\\Downloads\\Testing_image.jpg"
+IMAGE_PATH = "Your path"
 
 send_image('my_topic', IMAGE_PATH)
