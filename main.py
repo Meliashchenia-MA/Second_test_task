@@ -23,9 +23,6 @@ TOPIC = 'my_topic'
 
 SAVING_DIRECTORY = 'images'
 
-
-redis_client = redis.StrictRedis(host='redis', port=6379, db=0)
-
 class ImagesConsumer(Process):
     def __init__(self, config, topic, queue):
         Process.__init__(self)
@@ -70,7 +67,7 @@ class ImagesProcessor(Process):
     def run(self):
         print(str(self.__class__.__name__) + " started")
 
-        global redis_client
+        redis_client = redis.StrictRedis(host='redis', port=6379, db=0)
         if not os.path.exists(self.directory):
             os.makedirs(self.directory)
 
